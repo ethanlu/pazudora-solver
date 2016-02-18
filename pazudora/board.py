@@ -120,7 +120,7 @@ class Board(object):
 
             # find the clusters by doing a floodfill on any cell that is not unknown
             for r in range(self._rows):
-                for c in range(self._rows):
+                for c in range(self._columns):
                     if chains_board[r][c] is not None:
                         # cell is not unknown, so it is the start of a cluster
                         cluster = []
