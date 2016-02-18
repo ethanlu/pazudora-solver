@@ -82,14 +82,7 @@ class Board(object):
             self._board[r][c] = cell
 
     def get_matches(self):
-        def find_chains(m, n, type='horizontal'):
-            (row, column) = (m, n)
-            board = self._board
-            if type == 'vertical':
-                # when looking for vertical chains, swap the dimensions and transpose the board
-                (row, column) = (n, m)
-                board = zip(*self._board)
-
+        def find_chains(row, column, board):
             chains = []
             for r in range(row):
                 first, second, third = (None, None, None)
@@ -115,8 +108,8 @@ class Board(object):
             return chains
 
         # get horizontal and vertical chains
-        horizontal_chains = find_chains(self._rows, self._columns)
-        vertical_chains = find_chains(self._rows, self._columns, 'vertical')
+        horizontal_chains = find_chains(self._rows, self._columns, self._board)
+        vertical_chains = find_chains(self._columns, self._rows, zip(*self._board))  # swap row with column and transpose board to get verticals
 
         clusters = []
         if horizontal_chains or vertical_chains:
