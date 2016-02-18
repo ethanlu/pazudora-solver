@@ -1,3 +1,4 @@
+from itertools import chain
 from termcolor import colored
 
 import random
@@ -75,6 +76,11 @@ class Board(object):
     def copy_board(cls, board):
         return cls(board._board)
 
+    def update(self, cells):
+        for cell in cells:
+            (r, c) = cell.location
+            self._board[r][c] = cell
+
     def get_matches(self):
         def find_chains(m, n, type='horizontal'):
             (row, column) = (m, n)
@@ -112,14 +118,49 @@ class Board(object):
         horizontal_chains = find_chains(self._rows, self._columns)
         vertical_chains = find_chains(self._rows, self._columns, 'vertical')
 
-        return horizontal_chains, vertical_chains
+        clusters = []
+        if horizontal_chains or vertical_chains:
+            # there is at least one chain, overlay them onto an empty board
+            chains_board = [[None for c in range(self._columns)] for r in range(self._rows)]
+            for (r, c) in chain(*(horizontal_chains + vertical_chains)):
+                chains_board[r][c] = self._board[r][c]
+
+            # find the clusters by doing a floodfill on any cell that is not unknown
+            for r in range(self._rows):
+                for c in range(self._rows):
+                    if chains_board[r][c] is not None:
+                        # cell is not unknown, so it is the start of a cluster
+                        cluster = []
+                        cluster_piece = chains_board[r][c].piece
+                        search_stack = [(r, c)]
+                        while search_stack:
+                            r1, c1 = search_stack.pop()
+                            if 0 <= r1 < self._rows and 0 <= c1 < self._columns and chains_board[r1][c1] and cluster_piece == chains_board[r1][c1].piece:
+                                # candidate cell is a valid cell and it matches the cell that started the cluster search
+                                # add it to cluster and remove it from the chains board (memoize)
+                                cluster.append((r1, c1))
+                                chains_board[r1][c1] = None
+
+                                # add up, down, left, and right cells
+                                search_stack.append((r1 - 1, c1))
+                                search_stack.append((r1 + 1, c1))
+                                search_stack.append((r1, c1 - 1))
+                                search_stack.append((r1, c1 + 1))
+
+                        clusters.append((cluster_piece, tuple(cluster)))
+
+        return clusters
 
 
 if __name__ == "__main__":
-    b = Board.create_randomized_board(5, 6)
-    h,v = b.get_matches()
+    rows = 9
+    columns = 10
 
+    b = Board.create_randomized_board(rows, columns)
     print b
-    print h
-    print v
+
+    m = Board.create_empty_board(rows, columns)
+    m.update((Cell(r, c, cluster[0]) for cluster in b.get_matches() for r, c in cluster[1]))
+    print m
+
 
