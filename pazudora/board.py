@@ -76,20 +76,22 @@ class Board(object):
         return cls(board._board)
 
     def get_matches(self):
-        """
-        based off :
-        https://github.com/alexknutson/Combo.Tips/blob/post-merge-master/ext/optimizer.js
-        :return:
-        """
-        def find_horizontal_chains():
+        def find_chains(m, n, type='horizontal'):
+            (row, column) = (m, n)
+            board = self._board
+            if type == 'vertical':
+                # when looking for vertical chains, swap the dimensions and transpose the board
+                (row, column) = (n, m)
+                board = zip(*self._board)
+
             chains = []
-            for r in range(self._rows):
+            for r in range(row):
                 first, second, third = (None, None, None)
                 current_chain = set([])
-                for c in range(self._columns):
+                for c in range(column):
                     third = second
                     second = first
-                    first = self._board[r][c]
+                    first = board[r][c]
                     if first and second and third and (first.piece == second.piece == third.piece):
                         # keep adding the last three matching pieces to current chain
                         current_chain.update([first.location, second.location, third.location])
@@ -101,37 +103,14 @@ class Board(object):
                         current_chain = set([])
 
                 if current_chain:
-                    chains.append(current_chain)
-
-            return chains
-
-        def find_vertical_chains():
-            chains = []
-            for c in range(self._columns):
-                first, second, third = (None, None, None)
-                current_chain = set([])
-                for r in range(self._rows):
-                    third = second
-                    second = first
-                    first = self._board[r][c]
-                    if first and second and third and first.piece == second.piece == third.piece:
-                        # keep adding the last three matching pieces to current chain
-                        current_chain.update([first.location, second.location, third.location])
-                    else:
-                        # last three pieces do not match
-                        if current_chain:
-                            # add completed chain to list of chains before resetting
-                            chains.append(current_chain)
-                        current_chain = set([])
-
-                if current_chain:
+                    # add final chain if there is one
                     chains.append(current_chain)
 
             return chains
 
         # get horizontal and vertical chains
-        horizontal_chains = find_horizontal_chains()
-        vertical_chains = find_vertical_chains()
+        horizontal_chains = find_chains(self._rows, self._columns)
+        vertical_chains = find_chains(self._rows, self._columns, 'vertical')
 
         return horizontal_chains, vertical_chains
 
