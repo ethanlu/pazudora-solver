@@ -90,7 +90,7 @@ class Board(object):
                     third = second
                     second = first
                     first = self._board[r][c]
-                    if first and second and third and first.piece == second.piece == third.piece:
+                    if first and second and third and (first.piece == second.piece == third.piece):
                         # keep adding the last three matching pieces to current chain
                         current_chain.update([first.location, second.location, third.location])
                     else:
@@ -100,8 +100,8 @@ class Board(object):
                             chains.append(current_chain)
                         current_chain = set([])
 
-            if current_chain:
-                chains.append(current_chain)
+                if current_chain:
+                    chains.append(current_chain)
 
             return chains
 
@@ -124,8 +124,8 @@ class Board(object):
                             chains.append(current_chain)
                         current_chain = set([])
 
-            if current_chain:
-                chains.append(current_chain)
+                if current_chain:
+                    chains.append(current_chain)
 
             return chains
 
@@ -134,7 +134,6 @@ class Board(object):
         vertical_chains = find_vertical_chains()
 
         return horizontal_chains, vertical_chains
-
 
 
 if __name__ == "__main__":
