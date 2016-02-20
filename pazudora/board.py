@@ -91,7 +91,7 @@ class Board(object):
                     third = second
                     second = first
                     first = board[r][c]
-                    if first and second and third and (first.piece == second.piece == third.piece):
+                    if first and second and third and (first.piece == second.piece == third.piece) and first.piece != UNKNOWN:
                         # keep adding the last three matching pieces to current chain
                         current_chain.update([first.location, second.location, third.location])
                     else:
