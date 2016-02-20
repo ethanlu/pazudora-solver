@@ -1,34 +1,7 @@
 from itertools import chain
-from termcolor import colored
+from piece import Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
 
 import random
-
-FIRE = 'R'
-WOOD = 'G'
-WATER = 'B'
-DARK = 'P'
-LIGHT = 'Y'
-RECOVER = 'H'
-POISON = 'Q'
-JAMMER = 'X'
-UNKNOWN = '?'
-
-class Cell(object):
-    def __init__(self, row, column, piece):
-        self._row = row
-        self._column = column
-        self._piece = piece
-
-    def __repr__(self):
-        return self._piece
-
-    @property
-    def location(self):
-        return (self._row, self._column)
-
-    @property
-    def piece(self):
-        return self._piece
 
 class Board(object):
     def __init__(self, cells):
@@ -39,38 +12,22 @@ class Board(object):
         self._board = cells
 
     def __repr__(self):
-        def colorize(piece):
-            if piece == FIRE:
-                return colored(piece, 'red')
-            elif piece == WOOD:
-                return colored(piece, 'green')
-            elif piece == WATER:
-                return colored(piece, 'blue')
-            elif piece == DARK:
-                return colored(piece, 'magenta')
-            elif piece == LIGHT:
-                return colored(piece, 'yellow')
-            elif piece == RECOVER:
-                return colored(piece, 'cyan')
-            else:
-                return colored(piece, 'grey')
-
         output =  '  | ' + ' '.join([str(c) for c in range(self._columns)]) + '\n'
         output += '---' + ('--' * self._columns) + '\n'
 
         for r in range(self._rows):
-            output += str(r) + ' | ' + ' '.join([colorize(self._board[r][c].piece) for c in range(self._columns)]) + '\n'
+            output += str(r) + ' | ' + ' '.join([str(self._board[r][c]) for c in range(self._columns)]) + '\n'
 
         return output
 
     @classmethod
     def create_randomized_board(cls, rows, columns):
-        tiles = [FIRE, WOOD, WATER, DARK, LIGHT, RECOVER]
-        return cls([[Cell(r, c, random.choice(tiles)) for c in range(columns)] for r in range(rows)])
+        pieces = [Fire, Wood, Water, Dark, Light, Heart]
+        return cls([[random.choice(pieces)(r, c) for c in range(columns)] for r in range(rows)])
 
     @classmethod
     def create_empty_board(cls, rows, columns):
-        return cls([[Cell(r, c, UNKNOWN) for c in range(columns)] for r in range(rows)])
+        return cls([[Unknown(r, c) for c in range(columns)] for r in range(rows)])
 
     @classmethod
     def copy_board(cls, board):
@@ -91,7 +48,7 @@ class Board(object):
                     third = second
                     second = first
                     first = board[r][c]
-                    if first and second and third and (first.piece == second.piece == third.piece) and first.piece != UNKNOWN:
+                    if first and second and third and (first.piece == second.piece == third.piece) and first.is_matchable():
                         # keep adding the last three matching pieces to current chain
                         current_chain.update([first.location, second.location, third.location])
                     else:
@@ -124,11 +81,11 @@ class Board(object):
                     if chains_board[r][c] is not None:
                         # cell is not unknown, so it is the start of a cluster
                         cluster = []
-                        cluster_piece = chains_board[r][c].piece
+                        cluster_piece = chains_board[r][c]
                         search_stack = [(r, c)]
                         while search_stack:
                             r1, c1 = search_stack.pop()
-                            if 0 <= r1 < self._rows and 0 <= c1 < self._columns and chains_board[r1][c1] and cluster_piece == chains_board[r1][c1].piece:
+                            if 0 <= r1 < self._rows and 0 <= c1 < self._columns and chains_board[r1][c1] and cluster_piece.piece == chains_board[r1][c1].piece:
                                 # candidate cell is a valid cell and it matches the cell that started the cluster search
                                 # add it to cluster and remove it from the chains board (memoize)
                                 cluster.append((r1, c1))
@@ -153,7 +110,7 @@ if __name__ == "__main__":
     print b
 
     m = Board.create_empty_board(rows, columns)
-    m.update((Cell(r, c, cluster[0]) for cluster in b.get_matches() for r, c in cluster[1]))
+    m.update((cluster[0].__class__(r,c) for cluster in b.get_matches() for r, c in cluster[1]))
     print m
 
 
