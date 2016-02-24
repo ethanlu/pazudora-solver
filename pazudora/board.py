@@ -31,12 +31,45 @@ class Board(object):
 
     @classmethod
     def copy_board(cls, board):
-        return cls(board._board)
+        return cls([[board.cell(r, c).__class__(r, c) for c in range(board.columns)] for r in range(board.rows)])
 
-    def update(self, cells):
-        for cell in cells:
-            (r, c) = cell.location
-            self._board[r][c] = cell
+    @property
+    def rows(self):
+        return self._rows
+
+    @property
+    def columns(self):
+        return self._columns
+
+    def cell(self, row, column):
+        return self._board[row][column]
+
+    def swap(self, source_row, source_column, target_row, target_column):
+        tmp = self._board[source_row][source_column].__class__(target_row, target_column)
+        self._board[source_row][source_column] = self._board[target_row][target_column].__class__(source_row, source_column)
+        self._board[target_row][target_column] = tmp
+        return self
+
+    def update(self, row, column, piece):
+        self._board[row][column] = piece
+        return self
+
+    def get_cluster(self, row, column):
+        cluster = set([])
+        search_stack = [(row, column)]
+        while search_stack:
+            r, c = search_stack.pop()
+            if 0 <= r < self._rows and 0 <= c < self._columns and (r, c) not in cluster and self._board[r][c] and self._board[r][c].symbol == self._board[row][column].symbol:
+                # candidate cell is a valid cell and it matches the starting cell, add it to cluster
+                cluster.update(((r, c), ))
+
+                # add up, down, left, and right cells
+                search_stack.append((r - 1, c))
+                search_stack.append((r + 1, c))
+                search_stack.append((r, c - 1))
+                search_stack.append((r, c + 1))
+
+        return (self._board[row][column], cluster)
 
     def get_matches(self):
         def find_chains(row, column, board):
@@ -48,7 +81,7 @@ class Board(object):
                     third = second
                     second = first
                     first = board[r][c]
-                    if first and second and third and (first.piece == second.piece == third.piece) and first.is_matchable():
+                    if first and second and third and (first.symbol == second.symbol == third.symbol) and first.is_matchable():
                         # keep adding the last three matching pieces to current chain
                         current_chain.update([first.location, second.location, third.location])
                     else:
@@ -71,46 +104,28 @@ class Board(object):
         clusters = []
         if horizontal_chains or vertical_chains:
             # there is at least one chain, overlay them onto an empty board
-            chains_board = [[None for c in range(self._columns)] for r in range(self._rows)]
-            for (r, c) in chain(*(horizontal_chains + vertical_chains)):
-                chains_board[r][c] = self._board[r][c]
-
-            # find the clusters by doing a floodfill on any cell that is not unknown
-            for r in range(self._rows):
-                for c in range(self._columns):
-                    if chains_board[r][c] is not None:
-                        # cell is not unknown, so it is the start of a cluster
-                        cluster = []
-                        cluster_piece = chains_board[r][c]
-                        search_stack = [(r, c)]
-                        while search_stack:
-                            r1, c1 = search_stack.pop()
-                            if 0 <= r1 < self._rows and 0 <= c1 < self._columns and chains_board[r1][c1] and cluster_piece.piece == chains_board[r1][c1].piece:
-                                # candidate cell is a valid cell and it matches the cell that started the cluster search
-                                # add it to cluster and remove it from the chains board (memoize)
-                                cluster.append((r1, c1))
-                                chains_board[r1][c1] = None
-
-                                # add up, down, left, and right cells
-                                search_stack.append((r1 - 1, c1))
-                                search_stack.append((r1 + 1, c1))
-                                search_stack.append((r1, c1 - 1))
-                                search_stack.append((r1, c1 + 1))
-
-                        clusters.append((cluster_piece, tuple(cluster)))
+            chain_locations = set(chain(*(horizontal_chains + vertical_chains)))
+            memoized = set([])
+            for r, c in chain_locations:
+                if (r, c) not in memoized:
+                    # cell is part of a chain, but has not been clustered yet, so start cluster search
+                    cluster_piece, cluster = self.get_cluster(r, c)
+                    # need to do intersection because cluster search will return all adjacent cells of same symbol...including non-chain cells
+                    clusters.append((cluster_piece, cluster.intersection(chain_locations)))
+                    memoized.union(cluster)
 
         return clusters
 
 
 if __name__ == "__main__":
-    rows = 9
+    rows = 10
     columns = 10
 
     b = Board.create_randomized_board(rows, columns)
     print b
 
     m = Board.create_empty_board(rows, columns)
-    m.update((cluster[0].__class__(r,c) for cluster in b.get_matches() for r, c in cluster[1]))
+    for cluster in b.get_matches():
+        for r, c in cluster[1]:
+            m.update(r, c, cluster[0].__class__(r, c))
     print m
-
-
