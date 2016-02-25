@@ -1,5 +1,5 @@
 from itertools import chain
-from piece import Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
+from pazudora.piece import Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
 
 import random
 
@@ -115,17 +115,3 @@ class Board(object):
                     memoized.union(cluster)
 
         return clusters
-
-
-if __name__ == "__main__":
-    rows = 10
-    columns = 10
-
-    b = Board.create_randomized_board(rows, columns)
-    print b
-
-    m = Board.create_empty_board(rows, columns)
-    for cluster in b.get_matches():
-        for r, c in cluster[1]:
-            m.update(r, c, cluster[0].__class__(r, c))
-    print m

@@ -3,8 +3,8 @@
 from setuptools import setup, find_packages
 
 setup(
-    name="pazudora-solver",
-    version="0.1",
+    name="pazudora_solver",
+    version="0.3",
     author="ethanoks",
     description="Puzzles and Dragons solver",
     keywords="pad",
