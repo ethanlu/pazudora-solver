@@ -1,4 +1,4 @@
-from abc import ABCMeta, abstractmethod, abstractproperty
+from abc import ABCMeta, abstractproperty
 from termcolor import colored
 
 class Piece(object):
@@ -8,118 +8,66 @@ class Piece(object):
         self._row = r
         self._column = c
 
-    @abstractmethod
-    def is_matchable(self):
-        pass
+    def __repr__(self):
+        return colored(self.symbol, self.color)
 
     @property
     def location(self):
         return (self._row, self._column)
 
+    @abstractproperty
+    def symbol(self):
+        pass
+
+    @abstractproperty
+    def color(self):
+        pass
+
+    @abstractproperty
+    def matchable(self):
+        pass
+
 class Fire(Piece):
     symbol = 'R'
-
-    def __init__(self, r, c):
-        super(Fire, self).__init__(r, c)
-
-    def __repr__(self):
-        return colored(self.symbol, 'red')
-
-    def is_matchable(self):
-        return True
+    color = 'red'
+    matchable = True
 
 class Wood(Piece):
     symbol = 'G'
-
-    def __init__(self, r, c):
-        super(Wood, self).__init__(r, c)
-
-    def __repr__(self):
-        return colored(self.symbol, 'green')
-
-    def is_matchable(self):
-        return True
+    color = 'green'
+    matchable = True
 
 class Water(Piece):
     symbol = 'B'
-
-    def __init__(self, r, c):
-        super(Water, self).__init__(r, c)
-
-    def __repr__(self):
-        return colored(self.symbol, 'blue')
-
-    def is_matchable(self):
-        return True
+    color = 'blue'
+    matchable = True
 
 class Dark(Piece):
     symbol = 'P'
-
-    def __init__(self, r, c):
-        super(Dark, self).__init__(r, c)
-
-    def __repr__(self):
-        return colored(self.symbol, 'magenta')
-
-    def is_matchable(self):
-        return True
+    color = 'magenta'
+    matchable = True
 
 class Light(Piece):
     symbol = 'Y'
-
-    def __init__(self, r, c):
-        super(Light, self).__init__(r, c)
-
-    def __repr__(self):
-        return colored(self.symbol, 'yellow')
-
-    def is_matchable(self):
-        return True
+    color = 'yellow'
+    matchable = True
 
 class Heart(Piece):
     symbol = 'H'
-
-    def __init__(self, r, c):
-        super(Heart, self).__init__(r, c)
-
-    def __repr__(self):
-        return colored(self.symbol, 'cyan')
-
-    def is_matchable(self):
-        return True
+    color = 'cyan'
+    matchable = True
 
 class Poison(Piece):
     symbol = '@'
-
-    def __init__(self, r, c):
-        super(Poison, self).__init__(r, c)
-
-    def __repr__(self):
-        return colored(self.symbol, 'white')
-
-    def is_matchable(self):
-        return True
+    color = 'white'
+    matchable = True
 
 class Jammer(Piece):
     symbol = '#'
-
-    def __init__(self, r, c):
-        super(Jammer, self).__init__(r, c)
-
-    def __repr__(self):
-        return colored(self.symbol, 'white')
-
-    def is_matchable(self):
-        return True
+    color = 'white'
+    matchable = True
 
 class Unknown(Piece):
     symbol = '?'
-
-    def __init__(self, r, c):
-        super(Unknown, self).__init__(r, c)
-
-    def __repr__(self):
-        return colored(self.symbol, 'grey')
-
-    def is_matchable(self):
-        return False
+    color = 'grey'
+    matchable = False
