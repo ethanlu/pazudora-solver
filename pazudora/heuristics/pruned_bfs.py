@@ -19,6 +19,7 @@ class PrunedBfs(Heuristic):
                     swapped_board = Board.copy_board(board).swap(row, column, row + delta_r, column + delta_c)
                     next_solutions.append((self._score(swapped_board), (moves + ((delta_r, delta_c),)), swapped_board, row + delta_r, column + delta_c))
 
+            # prune solutions down before recursing to next depth
             return self._step(self._prune(next_solutions), depth - 1)
 
     def solve(self, board, depth):
