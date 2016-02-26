@@ -1,1 +1,2 @@
-termcolor>=1.1
+pytest==2.8.7
+termcolor==1.1

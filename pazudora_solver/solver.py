@@ -19,7 +19,7 @@ class Solver(object):
 
         #s = GreedyDfs(weights)
         s = PrunedBfs(weights)
-        s.diagonals = False
+        s.diagonals = True
         start = time.time()
         moves = s.solve(b, depth)
         performance = time.time() - start

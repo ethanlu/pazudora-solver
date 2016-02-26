@@ -4,12 +4,22 @@ from pazudora_solver.piece import Fire, Wood, Water, Dark, Light, Heart, Poison,
 import random
 
 class Board(object):
-    def __init__(self, cells):
-        # assumes layout is ROWxCOLUMN list
-        self._rows = len(cells)
-        self._columns = len(cells[0])
+    def __init__(self, pieces, rows, columns):
+        """
+        initializes board with list of pieces starting from upper left and going horizontally and then vertically down to the lower right. throws exception if
+        length of pieces do not match row and column dimensions
+        :param pieces: list of pieces from upper left down to lower right
+        :param rows: the number of rows
+        :param columns: the number of columns
+        :return: initialized board
+        """
+        if len(pieces) != (rows * columns):
+            raise Exception('Given pieces do not fit specified board dimensions!')
 
-        self._board = cells
+        self._rows = rows
+        self._columns = columns
+
+        self._board = [[pieces[((r % rows) * columns) + (c % columns)](r, c) for c in range(columns)] for r in range(rows)]
 
     def __repr__(self):
         output =  '  | ' + ' '.join([str(c) for c in range(self._columns)]) + '\n'
@@ -23,15 +33,15 @@ class Board(object):
     @classmethod
     def create_randomized_board(cls, rows, columns):
         pieces = [Fire, Wood, Water, Dark, Light, Heart]
-        return cls([[random.choice(pieces)(r, c) for c in range(columns)] for r in range(rows)])
+        return cls([random.choice(pieces) for i in range(rows * columns)], rows, columns)
 
     @classmethod
     def create_empty_board(cls, rows, columns):
-        return cls([[Unknown(r, c) for c in range(columns)] for r in range(rows)])
+        return cls([Unknown for i in range(rows * columns)], rows, columns)
 
     @classmethod
     def copy_board(cls, board):
-        return cls([[board.cell(r, c).__class__(r, c) for c in range(board.columns)] for r in range(board.rows)])
+        return cls([p.__class__ for p in chain(*board.board)], board.rows, board.columns)
 
     @property
     def rows(self):
@@ -40,6 +50,10 @@ class Board(object):
     @property
     def columns(self):
         return self._columns
+
+    @property
+    def board(self):
+        return self._board
 
     def cell(self, row, column):
         return self._board[row][column]
@@ -112,6 +126,6 @@ class Board(object):
                     cluster_piece, cluster = self.get_cluster(r, c)
                     # need to do intersection because cluster search will return all adjacent cells of same symbol...including non-chain cells
                     clusters.append((cluster_piece, cluster.intersection(chain_locations)))
-                    memoized.union(cluster)
+                    memoized = memoized.union(cluster)
 
         return clusters
