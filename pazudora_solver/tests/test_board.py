@@ -108,6 +108,7 @@ class TestBoard(object):
         assert len(matching) == 30, "Copied board's board does not match original!"
 
     def test_match_finding(self, board_with_3_chain, board_with_1_chain, board_with_0_chain):
+        # getting matches should find all chains on the board and their correct sizes
         m = {m[0].symbol: m[1] for m in board_with_3_chain.get_matches()}
 
         assert len(m.keys()) == 3, "Board with 3 chains did not yield correct match count of 3!"
@@ -138,6 +139,7 @@ class TestBoard(object):
         assert len(m.keys()) == 0, "Board with 0 chain did not yield correct match count of 0!"
 
     def test_cluster_finding(self, board_with_0_chain):
+        # clusters on a cell should return all adjacent neighbors of the same piece
         c = board_with_0_chain.get_cluster(2, 1)
         assert c[0].__class__ == Fire, "Cluster @ 2,1 is not the expected Fire piece!"
         assert len(c[1]) == 3, "Cluster @ 2,1 does not have expected count of 3!"
@@ -149,3 +151,46 @@ class TestBoard(object):
         c = board_with_0_chain.get_cluster(0, 0)
         assert c[0].__class__ == Unknown, "Cluster @ 0,0 is not the expected Fire piece!"
         assert len(c[1]) == 26, "Cluster @ 0,0 does not have expected count of 26!"
+
+    def test_cell_update(self):
+        # updating a board's cell should update that cell only
+        original = Board.create_randomized_board(5, 6)
+        updated_board = Board.copy_board(original).update(3, 4, Jammer)
+        matching = [updated_board.cell(r, c)
+                    for c in range(original.columns) for r in range(original.rows)
+                    if original.cell(r, c).__class__ == updated_board.cell(r, c).__class__ and original.cell(r, c).location == updated_board.cell(r, c).location]
+        assert len(matching) == 29, "Updating board did not yield expected matching cells with original board!"
+        assert updated_board.cell(3, 4).__class__ == Jammer, "Piece @ 3,4 was not updated to correct piece!"
+
+    def test_cell_swap(self, board_with_1_chain):
+        # swapping a board's cell with another should only affect the source and target cells
+        original = board_with_1_chain
+        swapped_board = Board.copy_board(original)
+        # swap corners where the two pieces are different
+        swapped_board.swap(0, 0, 4, 5)
+
+        matching = [swapped_board.cell(r, c)
+                    for c in range(original.columns) for r in range(original.rows)
+                    if original.cell(r, c).__class__ == swapped_board.cell(r, c).__class__ and original.cell(r, c).location == swapped_board.cell(r, c).location]
+        assert len(matching) == 28, "Swapping upper left corner with lower right corner of board yielded match counts!"
+        assert swapped_board.cell(0, 0).location == (0, 0), "Swapped piece @ 0,0 has invalid location!"
+        assert swapped_board.cell(4, 5).location == (4, 5), "Swapped piece @ 4,5 has invalid location!"
+        assert swapped_board.cell(0, 0).__class__ == original.cell(4, 5).__class__, "Swapped piece @ 0,0 does not match original piece @ 4,5!"
+        assert swapped_board.cell(4, 5).__class__ == original.cell(0, 0).__class__, "Swapped piece @ 4,5 does not match original piece @ 0,0!"
+
+        # swap multiple times
+        original = Board.create_randomized_board(5, 6)
+        swapped_board = Board.copy_board(original)
+        swapped_board.swap(0, 0, 1, 1)
+        swapped_board.swap(1, 1, 2, 2)
+        swapped_board.swap(2, 2, 3, 3)
+        swapped_board.swap(3, 3, 4, 4)
+        matching = [swapped_board.cell(r, c)
+                    for c in range(original.columns) for r in range(original.rows)
+                    if original.cell(r, c).__class__ == swapped_board.cell(r, c).__class__ and original.cell(r, c).location == swapped_board.cell(r, c).location]
+        assert len(matching) == 25, "Swapping upper left corner throught lower right corner of board yielded match counts!"
+        assert swapped_board.cell(0, 0).__class__ == original.cell(1, 1).__class__, "Swapped piece @ 0,0 does not match original @ 1,1"
+        assert swapped_board.cell(1, 1).__class__ == original.cell(2, 2).__class__, "Swapped piece @ 1,1 does not match original @ 2,2"
+        assert swapped_board.cell(2, 2).__class__ == original.cell(3, 3).__class__, "Swapped piece @ 2,2 does not match original @ 3,3"
+        assert swapped_board.cell(3, 3).__class__ == original.cell(4, 4).__class__, "Swapped piece @ 3,3 does not match original @ 4,4"
+        assert swapped_board.cell(4, 4).__class__ == original.cell(0, 0).__class__, "Swapped piece @ 4,4 does not match original @ 0,0"

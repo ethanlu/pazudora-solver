@@ -65,7 +65,7 @@ class Board(object):
         return self
 
     def update(self, row, column, piece):
-        self._board[row][column] = piece
+        self._board[row][column] = piece(row, column)
         return self
 
     def get_cluster(self, row, column):
