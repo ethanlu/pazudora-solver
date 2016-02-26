@@ -15,7 +15,7 @@ class Solver(object):
         m = Board.create_empty_board(rows, columns)
         for cluster in b.get_matches():
             for r, c in cluster[1]:
-                m.update(r, c, cluster[0].__class__(r, c))
+                m.update(r, c, cluster[0].__class__)
 
         #s = GreedyDfs(weights)
         s = PrunedBfs(weights)
@@ -36,7 +36,7 @@ class Solver(object):
         m = Board.create_empty_board(rows, columns)
         for cluster in moves[2].get_matches():
             for r, c in cluster[1]:
-                m.update(r, c, cluster[0].__class__(r, c))
+                m.update(r, c, cluster[0].__class__)
         print m
 
 

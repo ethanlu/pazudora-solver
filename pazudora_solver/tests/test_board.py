@@ -14,8 +14,8 @@ def board_with_3_chain():
 
 @pytest.fixture(scope='module')
 def board_with_1_chain():
-    return Board([Fire,  Wood,  Water, Dark,  Light, Heart,
-                  Water, Water, Water, Light, Heart, Fire,
+    return Board([Fire,  Wood,  Water, Dark,  Light, Poison,
+                  Water, Water, Water, Light, Heart, Jammer,
                   Fire,  Water, Dark,  Heart, Heart, Wood,
                   Light, Water, Light, Fire,  Wood,  Wood,
                   Dark,  Heart, Dark,  Light, Heart, Light], 5, 6)
@@ -27,18 +27,6 @@ def board_with_0_chain():
                   Unknown, Fire,    Unknown, Unknown, Unknown, Unknown,
                   Unknown, Fire,    Fire,    Unknown, Unknown, Unknown,
                   Unknown, Unknown, Unknown, Unknown, Unknown, Unknown], 5, 6)
-
-@pytest.fixture(scope='module')
-def weights():
-    return {Fire.symbol: 1.0,
-            Wood.symbol: 1.0,
-            Water.symbol: 1.0,
-            Dark.symbol: 1.0,
-            Light.symbol: 1.0,
-            Heart.symbol: 1.0,
-            Poison.symbol: 1.0,
-            Jammer.symbol: 1.0,
-            Unknown.symbol: 1.0}
 
 
 class TestBoard(object):
@@ -178,17 +166,13 @@ class TestBoard(object):
         assert swapped_board.cell(0, 0).__class__ == original.cell(4, 5).__class__, "Swapped piece @ 0,0 does not match original piece @ 4,5!"
         assert swapped_board.cell(4, 5).__class__ == original.cell(0, 0).__class__, "Swapped piece @ 4,5 does not match original piece @ 0,0!"
 
-        # swap multiple times
+        # swap multiple times should yield expected results
         original = Board.create_randomized_board(5, 6)
         swapped_board = Board.copy_board(original)
         swapped_board.swap(0, 0, 1, 1)
         swapped_board.swap(1, 1, 2, 2)
         swapped_board.swap(2, 2, 3, 3)
         swapped_board.swap(3, 3, 4, 4)
-        matching = [swapped_board.cell(r, c)
-                    for c in range(original.columns) for r in range(original.rows)
-                    if original.cell(r, c).__class__ == swapped_board.cell(r, c).__class__ and original.cell(r, c).location == swapped_board.cell(r, c).location]
-        assert len(matching) == 25, "Swapping upper left corner throught lower right corner of board yielded match counts!"
         assert swapped_board.cell(0, 0).__class__ == original.cell(1, 1).__class__, "Swapped piece @ 0,0 does not match original @ 1,1"
         assert swapped_board.cell(1, 1).__class__ == original.cell(2, 2).__class__, "Swapped piece @ 1,1 does not match original @ 2,2"
         assert swapped_board.cell(2, 2).__class__ == original.cell(3, 3).__class__, "Swapped piece @ 2,2 does not match original @ 3,3"
