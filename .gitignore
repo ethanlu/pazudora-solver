@@ -1,3 +1,6 @@
 .idea/
 .cache/
 *.egg-info/
+.tox/
+tests/__pycache__
+*.pyc

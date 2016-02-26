@@ -1,5 +1,5 @@
 from heuristic import Heuristic
-from pazudora_solver.board import Board
+from ..board import Board
 
 class PrunedBfs(Heuristic):
     def __init__(self, weights):
