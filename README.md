@@ -10,10 +10,10 @@ Inspired by the [Javascript version](https://github.com/alexknutson/Combo.Tips) 
 
 ### Example
 ```python
-from pazudora.board import Board
-from pazudora.piece import Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
-from pazudora.heuristics.greedy_dfs import GreedyDfs
-from pazudora.heuristics.pruned_bfs import PrunedBfs
+from pazudorasolver.board import Board
+from pazudorasolver.piece import Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
+from pazudorasolver.heuristics.greedy_dfs import GreedyDfs
+from pazudorasolver.heuristics.pruned_bfs import PrunedBfs
 
 weights = {Fire.symbol: 2.0,
            Wood.symbol: 2.0,
