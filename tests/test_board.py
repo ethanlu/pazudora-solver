@@ -36,11 +36,13 @@ class TestBoard(object):
         # length of list must be equal to row x column for the board to be valid
         with pytest.raises(Exception) as exec_info:
             Board([Fire, Water, Wood, Dark, Light, Heart, Poison, Jammer, Unknown], 10, 10)
-        assert 'Given pieces do not fit specified board dimensions!' in str(exec_info.value), "Board's pieces list was smaller than dimensions, but did not fail initialization!"
+        assert 'Given pieces do not fit specified board dimensions!' in str(exec_info.value), \
+            "Board's pieces list was smaller than dimensions, but did not fail initialization!"
 
         with pytest.raises(Exception) as exec_info:
             Board([Fire, Water, Wood, Dark, Light, Heart, Poison, Jammer, Unknown], 2, 2)
-        assert 'Given pieces do not fit specified board dimensions!' in str(exec_info.value), "Board's pieces list was bigger than dimensions, but did not fail initialization!"
+        assert 'Given pieces do not fit specified board dimensions!' in str(exec_info.value), \
+            "Board's pieces list was bigger than dimensions, but did not fail initialization!"
 
         with pytest.raises(Exception) as exec_info:
             Board([Fire, Water, Wood, Dark, Light, Heart, Poison, Jammer, Unknown], 0, 3)
@@ -146,9 +148,11 @@ class TestBoard(object):
         # updating a board's cell should update that cell only
         original = Board.create_randomized_board(5, 6)
         updated_board = Board.copy_board(original).update(3, 4, Jammer)
-        matching = [updated_board.cell(r, c)
-                    for c in range(original.columns) for r in range(original.rows)
-                    if original.cell(r, c).__class__ == updated_board.cell(r, c).__class__ and original.cell(r, c).location == updated_board.cell(r, c).location]
+        matching = [
+            updated_board.cell(r, c)
+            for c in range(original.columns) for r in range(original.rows)
+            if original.cell(r, c).__class__ == updated_board.cell(r, c).__class__ and original.cell(r, c).location == updated_board.cell(r, c).location
+        ]
         assert len(matching) == 29, "Updating board did not yield expected matching cells with original board!"
         assert updated_board.cell(3, 4).__class__ == Jammer, "Piece @ 3,4 was not updated to correct piece!"
 
@@ -159,9 +163,11 @@ class TestBoard(object):
         # swap corners where the two pieces are different
         swapped_board.swap(0, 0, 4, 5)
 
-        matching = [swapped_board.cell(r, c)
-                    for c in range(original.columns) for r in range(original.rows)
-                    if original.cell(r, c).__class__ == swapped_board.cell(r, c).__class__ and original.cell(r, c).location == swapped_board.cell(r, c).location]
+        matching = [
+            swapped_board.cell(r, c)
+            for c in range(original.columns) for r in range(original.rows)
+            if original.cell(r, c).__class__ == swapped_board.cell(r, c).__class__ and original.cell(r, c).location == swapped_board.cell(r, c).location
+        ]
         assert len(matching) == 28, "Swapping upper left corner with lower right corner of board yielded match counts!"
         assert swapped_board.cell(0, 0).location == (0, 0), "Swapped piece @ 0,0 has invalid location!"
         assert swapped_board.cell(4, 5).location == (4, 5), "Swapped piece @ 4,5 has invalid location!"

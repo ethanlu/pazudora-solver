@@ -99,7 +99,8 @@ class TestHeuristic(object):
         h.diagonals = True
         swaps = h._swaps(board, 2, 2, None)
         assert len(swaps) == 8, "Swaps @ 2,2 (diagonals)did not yield expected swap count of 8!"
-        assert len(set(swaps).intersection(set([(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1)]))) == 8, "Swaps @ 2,2  did not yield correct set of deltas!"
+        assert len(set(swaps).intersection(set([(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1)]))) == 8, \
+            "Swaps @ 2,2  did not yield correct set of deltas!"
 
         # swapping at corners should yield 3
         swaps = h._swaps(board, 0, 0, None)
@@ -132,25 +133,33 @@ class TestHeuristic(object):
         # swapping with previous move should yield 7
         swaps = h._swaps(board, 2, 2, (-1, -1))
         assert len(swaps) == 7, "Swaps @ 2,2  did not yield expected swap count of 7!"
-        assert len(set(swaps).intersection(set([(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 0), (1, -1), (0, -1)]))) == 7, "Swaps @ 2,2 and previous move -1,-1 did not yield correct set of deltas!"
+        assert len(set(swaps).intersection(set([(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 0), (1, -1), (0, -1)]))) == 7, \
+            "Swaps @ 2,2 and previous move -1,-1 did not yield correct set of deltas!"
         swaps = h._swaps(board, 2, 2, (-1, 0))
         assert len(swaps) == 7, "Swaps @ 2,2  did not yield expected swap count of 7!"
-        assert len(set(swaps).intersection(set([(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, -1), (0, -1)]))) == 7, "Swaps @ 2,2 and previous move -1,0 did not yield correct set of deltas!"
+        assert len(set(swaps).intersection(set([(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, -1), (0, -1)]))) == 7, \
+            "Swaps @ 2,2 and previous move -1,0 did not yield correct set of deltas!"
         swaps = h._swaps(board, 2, 2, (-1, 1))
         assert len(swaps) == 7, "Swaps @ 2,2  did not yield expected swap count of 7!"
-        assert len(set(swaps).intersection(set([(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (0, -1)]))) == 7, "Swaps @ 2,2 and previous move -1,1 did not yield correct set of deltas!"
+        assert len(set(swaps).intersection(set([(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (0, -1)]))) == 7, \
+            "Swaps @ 2,2 and previous move -1,1 did not yield correct set of deltas!"
         swaps = h._swaps(board, 2, 2, (0, 1))
         assert len(swaps) == 7, "Swaps @ 2,2  did not yield expected swap count of 7!"
-        assert len(set(swaps).intersection(set([(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1)]))) == 7, "Swaps @ 2,2 and previous move 0,1 did not yield correct set of deltas!"
+        assert len(set(swaps).intersection(set([(-1, -1), (-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1)]))) == 7, \
+            "Swaps @ 2,2 and previous move 0,1 did not yield correct set of deltas!"
         swaps = h._swaps(board, 2, 2, (1, 1))
         assert len(swaps) == 7, "Swaps @ 2,2  did not yield expected swap count of 7!"
-        assert len(set(swaps).intersection(set([(-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1)]))) == 7, "Swaps @ 2,2 and previous move 1,1 did not yield correct set of deltas!"
+        assert len(set(swaps).intersection(set([(-1, 0), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1)]))) == 7, \
+            "Swaps @ 2,2 and previous move 1,1 did not yield correct set of deltas!"
         swaps = h._swaps(board, 2, 2, (1, 0))
         assert len(swaps) == 7, "Swaps @ 2,2  did not yield expected swap count of 7!"
-        assert len(set(swaps).intersection(set([(-1, -1), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1)]))) == 7, "Swaps @ 2,2 and previous move 1,0 did not yield correct set of deltas!"
+        assert len(set(swaps).intersection(set([(-1, -1), (-1, 1), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1)]))) == 7, \
+            "Swaps @ 2,2 and previous move 1,0 did not yield correct set of deltas!"
         swaps = h._swaps(board, 2, 2, (1, -1))
         assert len(swaps) == 7, "Swaps @ 2,2  did not yield expected swap count of 7!"
-        assert len(set(swaps).intersection(set([(-1, -1), (-1, 0), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1)]))) == 7, "Swaps @ 2,2 and previous move -1,1 did not yield correct set of deltas!"
+        assert len(set(swaps).intersection(set([(-1, -1), (-1, 0), (0, 1), (1, 1), (1, 0), (1, -1), (0, -1)]))) == 7, \
+            "Swaps @ 2,2 and previous move -1,1 did not yield correct set of deltas!"
         swaps = h._swaps(board, 2, 2, (0, -1))
         assert len(swaps) == 7, "Swaps @ 2,2  did not yield expected swap count of 7!"
-        assert len(set(swaps).intersection(set([(-1, -1), (-1, 0), (-1, 1), (1, 1), (1, 0), (1, -1), (0, -1)]))) == 7, "Swaps @ 2,2 and previous move 0,-1 did not yield correct set of deltas!"
+        assert len(set(swaps).intersection(set([(-1, -1), (-1, 0), (-1, 1), (1, 1), (1, 0), (1, -1), (0, -1)]))) == 7, \
+            "Swaps @ 2,2 and previous move 0,-1 did not yield correct set of deltas!"

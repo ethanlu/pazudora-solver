@@ -74,7 +74,8 @@ class Board(object):
         search_stack = [(row, column)]
         while search_stack:
             r, c = search_stack.pop()
-            if 0 <= r < self._rows and 0 <= c < self._columns and (r, c) not in cluster and self._board[r][c] and self._board[r][c].symbol == self._board[row][column].symbol:
+            if 0 <= r < self._rows and 0 <= c < self._columns and (r, c) not in cluster and \
+               self._board[r][c] and self._board[r][c].symbol == self._board[row][column].symbol:
                 # candidate cell is a valid cell and it matches the starting cell, add it to cluster
                 cluster.update(((r, c), ))
 
