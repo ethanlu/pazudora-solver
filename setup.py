@@ -22,13 +22,13 @@ class PyTestCommand(TestCommand):
 
 setup(
     name="pazudorasolver",
-    version="0.1.0",
+    version="0.1.2",
     author="Ethan Fang Lu",
     author_email="fang.lu@gmail.com",
     description="Puzzles and Dragons board solver",
     keywords="pad",
     url="https://github.com/ethanlu/pazudora-solver",
-    download_url="https://github.com/ethanlu/pazudora-solver/releases/tag/0.1.0",
+    download_url="https://github.com/ethanlu/pazudora-solver/releases/tag/0.1.2",
     license="MIT",
     classifiers=[
         'Development Status :: 4 - Beta',
@@ -37,7 +37,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Topic :: Games/Entertainment :: Puzzle Games'
     ],
-    packages=['pazudorasolver'],
+    packages=find_packages(),
     dependency_links=[],
     install_requires=[
         "termcolor==1.1"
