@@ -28,7 +28,7 @@ setup(
     description="Puzzles and Dragons board solver",
     keywords="pad",
     url="https://github.com/ethanlu/pazudora-solver",
-    download_url="",
+    download_url="https://github.com/ethanlu/pazudora-solver/releases/tag/0.1.0",
     license="MIT",
     classifiers=[
         'Development Status :: 4 - Beta',
