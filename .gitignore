@@ -1,6 +1,12 @@
+# configuration directories
 .idea/
 .cache/
-*.egg-info/
+.eggs/
 .tox/
+
+# unit tests
 tests/__pycache__
+
+# setup.py
+*.egg-info/
 *.pyc

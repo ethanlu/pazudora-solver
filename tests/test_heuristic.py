@@ -1,8 +1,10 @@
-from pazudora_solver.piece import *
-from pazudora_solver.heuristics.heuristic import *
-from pazudora_solver.heuristics.greedy_dfs import *
+from pazudora_solver.piece import Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
+from pazudora_solver.board import Board
+from pazudora_solver.heuristics.heuristic import Heuristic
+from pazudora_solver.heuristics.greedy_dfs import GreedyDfs
 
 import pytest
+
 
 @pytest.fixture(scope='module')
 def weights():
@@ -16,6 +18,7 @@ def weights():
             Jammer.symbol: .5,
             Unknown.symbol: 0.1}
 
+
 @pytest.fixture(scope='module')
 def board():
     return Board([Fire,    Unknown, Unknown, Unknown, Dark,    Dark,
@@ -24,11 +27,12 @@ def board():
                   Unknown, Water,   Unknown, Unknown, Unknown, Unknown,
                   Unknown, Water,   Unknown, Light,   Light,   Light], 5, 6)
 
+
 class TestHeuristic(object):
     def test_abstract_heuristic_exception(self):
         # should not be able to instantiate base piece class
         with pytest.raises(TypeError) as exec_info:
-            h = Heuristic()
+            Heuristic()
         assert 'abstract class Heuristic' in str(exec_info.value), "Heuristic class not abstract!"
 
     def test_scoring(self, weights, board):

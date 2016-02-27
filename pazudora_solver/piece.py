@@ -1,6 +1,7 @@
 from abc import ABCMeta, abstractproperty
 from termcolor import colored
 
+
 class Piece(object):
     __metaclass__ = ABCMeta
 
@@ -27,45 +28,54 @@ class Piece(object):
     def matchable(self):
         pass
 
+
 class Fire(Piece):
     symbol = 'R'
     color = 'red'
     matchable = True
+
 
 class Wood(Piece):
     symbol = 'G'
     color = 'green'
     matchable = True
 
+
 class Water(Piece):
     symbol = 'B'
     color = 'blue'
     matchable = True
+
 
 class Dark(Piece):
     symbol = 'P'
     color = 'magenta'
     matchable = True
 
+
 class Light(Piece):
     symbol = 'Y'
     color = 'yellow'
     matchable = True
+
 
 class Heart(Piece):
     symbol = 'H'
     color = 'cyan'
     matchable = True
 
+
 class Poison(Piece):
     symbol = '@'
     color = 'white'
     matchable = True
 
+
 class Jammer(Piece):
     symbol = '#'
     color = 'white'
     matchable = True
+
 
 class Unknown(Piece):
     symbol = '?'

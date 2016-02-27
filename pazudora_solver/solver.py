@@ -5,6 +5,7 @@ from piece import Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
 
 import time
 
+
 class Solver(object):
     def __init__(self):
         pass
@@ -17,8 +18,7 @@ class Solver(object):
             for r, c in cluster[1]:
                 m.update(r, c, cluster[0].__class__)
 
-        #s = GreedyDfs(weights)
-        s = PrunedBfs(weights)
+        s = GreedyDfs(weights) if False else PrunedBfs(weights)
         s.diagonals = True
         start = time.time()
         moves = s.solve(b, depth)

@@ -40,6 +40,10 @@ setup(
         "pytest==2.8.7",
         "termcolor==1.1"
     ],
+    tests_require=[
+        "flake8"
+        "pytest"
+    ],
     cmdclass={
         'test': PyTestCommand
     }

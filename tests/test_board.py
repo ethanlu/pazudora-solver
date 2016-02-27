@@ -1,5 +1,5 @@
-from pazudora_solver.piece import *
-from pazudora_solver.board import *
+from pazudora_solver.piece import Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
+from pazudora_solver.board import Board
 
 import pytest
 
@@ -12,6 +12,7 @@ def board_with_3_chain():
                   Light, Water, Light, Fire,  Wood,  Wood,
                   Dark,  Water, Dark,  Light, Light, Light], 5, 6)
 
+
 @pytest.fixture(scope='module')
 def board_with_1_chain():
     return Board([Fire,  Wood,  Water, Dark,  Light, Poison,
@@ -19,6 +20,7 @@ def board_with_1_chain():
                   Fire,  Water, Dark,  Heart, Heart, Wood,
                   Light, Water, Light, Fire,  Wood,  Wood,
                   Dark,  Heart, Dark,  Light, Heart, Light], 5, 6)
+
 
 @pytest.fixture(scope='module')
 def board_with_0_chain():
@@ -33,15 +35,15 @@ class TestBoard(object):
     def test_invalid_board(self):
         # length of list must be equal to row x column for the board to be valid
         with pytest.raises(Exception) as exec_info:
-            b = Board([Fire, Water, Wood, Dark, Light, Heart, Poison, Jammer, Unknown], 10, 10)
+            Board([Fire, Water, Wood, Dark, Light, Heart, Poison, Jammer, Unknown], 10, 10)
         assert 'Given pieces do not fit specified board dimensions!' in str(exec_info.value), "Board's pieces list was smaller than dimensions, but did not fail initialization!"
 
         with pytest.raises(Exception) as exec_info:
-            b = Board([Fire, Water, Wood, Dark, Light, Heart, Poison, Jammer, Unknown], 2, 2)
+            Board([Fire, Water, Wood, Dark, Light, Heart, Poison, Jammer, Unknown], 2, 2)
         assert 'Given pieces do not fit specified board dimensions!' in str(exec_info.value), "Board's pieces list was bigger than dimensions, but did not fail initialization!"
 
         with pytest.raises(Exception) as exec_info:
-            b = Board([Fire, Water, Wood, Dark, Light, Heart, Poison, Jammer, Unknown], 0, 3)
+            Board([Fire, Water, Wood, Dark, Light, Heart, Poison, Jammer, Unknown], 0, 3)
         assert 'Given pieces do not fit specified board dimensions!' in str(exec_info.value), "Board's row was invalid, but did not fail initialization!"
 
     def test_board_setup(self):

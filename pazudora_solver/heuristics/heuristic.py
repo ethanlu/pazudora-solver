@@ -1,5 +1,6 @@
 from abc import ABCMeta, abstractmethod
 
+
 class Heuristic(object):
     __metaclass__ = ABCMeta
 

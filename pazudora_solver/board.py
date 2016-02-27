@@ -1,13 +1,14 @@
 from itertools import chain
-from piece import Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
+from piece import Fire, Wood, Water, Dark, Light, Heart, Unknown
 
 import random
+
 
 class Board(object):
     def __init__(self, pieces, rows, columns):
         """
-        initializes board with list of pieces starting from upper left and going horizontally and then vertically down to the lower right. throws exception if
-        length of pieces do not match row and column dimensions
+        initializes board with list of pieces starting from upper left and going horizontally and then vertically down
+        to the lower right. throws exception if length of pieces do not match row and column dimensions
         :param pieces: list of pieces from upper left down to lower right
         :param rows: the number of rows
         :param columns: the number of columns
@@ -22,7 +23,7 @@ class Board(object):
         self._board = [[pieces[((r % rows) * columns) + (c % columns)](r, c) for c in range(columns)] for r in range(rows)]
 
     def __repr__(self):
-        output =  '  | ' + ' '.join([str(c) for c in range(self._columns)]) + '\n'
+        output = '  | ' + ' '.join([str(c) for c in range(self._columns)]) + '\n'
         output += '---' + ('--' * self._columns) + '\n'
 
         for r in range(self._rows):

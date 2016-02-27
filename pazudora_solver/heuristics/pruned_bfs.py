@@ -1,6 +1,7 @@
 from heuristic import Heuristic
 from ..board import Board
 
+
 class PrunedBfs(Heuristic):
     def __init__(self, weights):
         super(PrunedBfs, self).__init__(weights)
