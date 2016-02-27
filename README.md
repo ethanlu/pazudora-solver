@@ -1,4 +1,4 @@
-[![PyPI version](https://badge.fury.io/py/pazudora_solver.svg)](https://pypi.python.org/pypi/pazudora_solver)
+[![PyPI version](https://badge.fury.io/py/pazudorasolver.svg)](https://badge.fury.io/py/pazudorasolver)
 [![Build Status](https://travis-ci.org/ethanlu/pazudora-solver.svg?branch=master)](https://travis-ci.org/ethanlu/pazudora-solver)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/78cdfdafa28f4475a3dea086c3dd006d)](https://www.codacy.com/app/ethanoks/pazudora-solver)
 
