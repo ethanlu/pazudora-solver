@@ -1,5 +1,5 @@
-from heuristic import Heuristic
-from ..board import Board
+from pazudora_solver.heuristics.heuristic import Heuristic
+from pazudora_solver.board import Board
 
 
 class PrunedBfs(Heuristic):

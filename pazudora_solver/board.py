@@ -1,5 +1,5 @@
 from itertools import chain
-from piece import Fire, Wood, Water, Dark, Light, Heart, Unknown
+from pazudora_solver.piece import Fire, Wood, Water, Dark, Light, Heart, Unknown
 
 import random
 

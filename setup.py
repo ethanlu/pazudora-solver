@@ -4,6 +4,7 @@ import sys
 from setuptools import setup, find_packages
 from setuptools.command.test import test as TestCommand
 
+
 class PyTestCommand(TestCommand):
     def initialize_options(self):
         TestCommand.initialize_options(self)
@@ -41,7 +42,7 @@ setup(
         "termcolor==1.1"
     ],
     tests_require=[
-        "flake8"
+        "flake8",
         "pytest"
     ],
     cmdclass={
