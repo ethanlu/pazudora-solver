@@ -33,13 +33,13 @@ setup(
     classifiers=[
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
+        'Programming Language :: Python :: 2.6',
         'Programming Language :: Python :: 2.7',
         'Topic :: Games/Entertainment :: Puzzle Games'
     ],
-    packages=find_packages("pazudorasolver.*"),
+    packages=['pazudorasolver'],
     dependency_links=[],
     install_requires=[
-        "pytest==2.8.7",
         "termcolor==1.1"
     ],
     tests_require=[
