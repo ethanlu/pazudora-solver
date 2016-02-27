@@ -51,25 +51,25 @@ def test_invalid_board():
 def test_board_setup():
     # as long as length of piece list is equal to row x column, the board yields no error and loads from top left down to bottom right
     b = Board([Fire, Water, Wood, Dark, Light, Heart], 2, 3)
-    assert type(b) == Board, "Board valid 2x3, but was not instantiated!"
-    assert type(b.cell(0, 0)) == Fire, "Unexpected piece @ 0,0 on 2x3 Board!"
-    assert type(b.cell(0, 1)) == Water, "Unexpected piece @ 0,1 on 2x3 Board!"
-    assert type(b.cell(0, 2)) == Wood, "Unexpected piece @ 0,2 on 2x3 Board!"
-    assert type(b.cell(1, 0)) == Dark, "Unexpected piece @ 1,0 on 2x3 Board!"
-    assert type(b.cell(1, 1)) == Light, "Unexpected piece @ 1,1 on 2x3 Board!"
-    assert type(b.cell(1, 2)) == Heart, "Unexpected piece @ 1,2 on 2x3 Board!"
+    assert isinstance(b, Board), "Board valid 2x3, but was not instantiated!"
+    assert isinstance(b.cell(0, 0), Fire), "Unexpected piece @ 0,0 on 2x3 Board!"
+    assert isinstance(b.cell(0, 1), Water), "Unexpected piece @ 0,1 on 2x3 Board!"
+    assert isinstance(b.cell(0, 2), Wood), "Unexpected piece @ 0,2 on 2x3 Board!"
+    assert isinstance(b.cell(1, 0), Dark), "Unexpected piece @ 1,0 on 2x3 Board!"
+    assert isinstance(b.cell(1, 1), Light), "Unexpected piece @ 1,1 on 2x3 Board!"
+    assert isinstance(b.cell(1, 2), Heart), "Unexpected piece @ 1,2 on 2x3 Board!"
     assert b.rows == 2, "2x3 board has incorrect rows property!"
     assert b.columns == 3, "2x3 board has incorrect columns property!"
     assert len(b.board) == 2 and len(b.board[0]) == 3, "2x3 board has incorrect board dimensions!"
 
     b = Board([Fire, Water, Wood, Dark, Light, Heart], 3, 2)
-    assert type(b) == Board, "Board valid 3x2, but was not instantiated!"
-    assert type(b.cell(0, 0)) == Fire, "Unexpected piece @ 0,0 on 3x2 Board!"
-    assert type(b.cell(0, 1)) == Water, "Unexpected piece @ 0,1 on 3x2 Board!"
-    assert type(b.cell(1, 0)) == Wood, "Unexpected piece @ 1,0 on 3x2 Board!"
-    assert type(b.cell(1, 1)) == Dark, "Unexpected piece @ 1,1 on 3x2 Board!"
-    assert type(b.cell(2, 0)) == Light, "Unexpected piece @ 2,0 on 3x2 Board!"
-    assert type(b.cell(2, 1)) == Heart, "Unexpected piece @ 2,1 on 3x2 Board!"
+    assert isinstance(b, Board), "Board valid 3x2, but was not instantiated!"
+    assert isinstance(b.cell(0, 0), Fire), "Unexpected piece @ 0,0 on 3x2 Board!"
+    assert isinstance(b.cell(0, 1), Water), "Unexpected piece @ 0,1 on 3x2 Board!"
+    assert isinstance(b.cell(1, 0), Wood), "Unexpected piece @ 1,0 on 3x2 Board!"
+    assert isinstance(b.cell(1, 1), Dark), "Unexpected piece @ 1,1 on 3x2 Board!"
+    assert isinstance(b.cell(2, 0), Light), "Unexpected piece @ 2,0 on 3x2 Board!"
+    assert isinstance(b.cell(2, 1), Heart), "Unexpected piece @ 2,1 on 3x2 Board!"
     assert b.rows == 3, "3x2 board has incorrect rows property!"
     assert b.columns == 2, "3x2 board has incorrect columns property!"
     assert len(b.board) == 3 and len(b.board[0]) == 2, "3x2 board has incorrect board dimensions!"
@@ -78,7 +78,7 @@ def test_board_setup():
 def test_empty_board():
     # empty board should contain only Unknown pieces
     b = Board.create_empty_board(5, 6)
-    unknown_pieces = [b.cell(r, c) for c in range(b.columns) for r in range(b.rows) if type(b.cell(r, c)) == Unknown]
+    unknown_pieces = [b.cell(r, c) for c in range(b.columns) for r in range(b.rows) if isinstance(b.cell(r, c), Unknown)]
     assert len(unknown_pieces) == 30, "Creating empty board does not contain only Unknown pieces!"
 
 
@@ -86,7 +86,7 @@ def test_randomized_board():
     # randomized board should contain only Fire, Water, Wood, Dark, Light, and Heart pieces
     allowed_pieces = set([Fire, Water, Wood, Dark, Light, Heart])
     b = Board.create_randomized_board(5, 6)
-    pieces = [b.cell(r, c) for c in range(b.columns) for r in range(b.rows) if type(b.cell(r, c)) in allowed_pieces]
+    pieces = [b.cell(r, c) for c in range(b.columns) for r in range(b.rows) if isinstance(b.cell(r, c), tuple(allowed_pieces))]
     assert len(pieces) == 30, "Creating randomized board contains invalid pieces!"
 
 
@@ -138,15 +138,15 @@ def test_match_finding(board_with_3_chain, board_with_1_chain, board_with_0_chai
 def test_cluster_finding(board_with_0_chain):
     # clusters on a cell should return all adjacent neighbors of the same piece
     c = board_with_0_chain.get_cluster(2, 1)
-    assert type(c[0]) == Fire, "Cluster @ 2,1 is not the expected Fire piece!"
+    assert isinstance(c[0], Fire), "Cluster @ 2,1 is not the expected Fire piece!"
     assert len(c[1]) == 3, "Cluster @ 2,1 does not have expected count of 3!"
 
     c = board_with_0_chain.get_cluster(1, 2)
-    assert type(c[0]) == Fire, "Cluster @ 1,2 is not the expected Fire piece!"
+    assert isinstance(c[0], Fire), "Cluster @ 1,2 is not the expected Fire piece!"
     assert len(c[1]) == 1, "Cluster @ 1,2 does not have expected count of 1!"
 
     c = board_with_0_chain.get_cluster(0, 0)
-    assert type(c[0]) == Unknown, "Cluster @ 0,0 is not the expected Fire piece!"
+    assert isinstance(c[0], Unknown), "Cluster @ 0,0 is not the expected Fire piece!"
     assert len(c[1]) == 26, "Cluster @ 0,0 does not have expected count of 26!"
 
 
@@ -160,7 +160,7 @@ def test_cell_update():
         if isinstance(original.cell(r, c), type(updated_board.cell(r, c))) and original.cell(r, c).location == updated_board.cell(r, c).location
     ]
     assert len(matching) == 29, "Updating board did not yield expected matching cells with original board!"
-    assert type(updated_board.cell(3, 4)) == Jammer, "Piece @ 3,4 was not updated to correct piece!"
+    assert isinstance(updated_board.cell(3, 4), Jammer), "Piece @ 3,4 was not updated to correct piece!"
 
 
 def test_cell_swap(board_with_1_chain):
