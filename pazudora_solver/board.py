@@ -42,7 +42,7 @@ class Board(object):
 
     @classmethod
     def copy_board(cls, board):
-        return cls([p.__class__ for p in chain(*board.board)], board.rows, board.columns)
+        return cls([type(p) for p in chain(*board.board)], board.rows, board.columns)
 
     @property
     def rows(self):
@@ -60,8 +60,8 @@ class Board(object):
         return self._board[row][column]
 
     def swap(self, source_row, source_column, target_row, target_column):
-        tmp = self._board[source_row][source_column].__class__(target_row, target_column)
-        self._board[source_row][source_column] = self._board[target_row][target_column].__class__(source_row, source_column)
+        tmp = type(self._board[source_row][source_column])(target_row, target_column)
+        self._board[source_row][source_column] = type(self._board[target_row][target_column])(source_row, source_column)
         self._board[target_row][target_column] = tmp
         return self
 

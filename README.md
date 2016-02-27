@@ -43,5 +43,5 @@ print solution
 
 ### TODO
 - Improve fragment score calculation
-- Add new heuristics implementation
+- Add more heuristics for solving board
 - Add benchmark app to compare various heuristics
