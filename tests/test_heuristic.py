@@ -28,10 +28,10 @@ def board():
                   Unknown, Water,   Unknown, Light,   Light,   Light], 5, 6)
 
 
-def test_abstract_heuristic_exception():
+def test_abstract_heuristic_exception(weights):
     # should not be able to instantiate base piece class
     with pytest.raises(TypeError) as exec_info:
-        Heuristic()
+        Heuristic(weights)
     assert 'abstract class Heuristic' in str(exec_info.value), "Heuristic class not abstract!"
 
 
