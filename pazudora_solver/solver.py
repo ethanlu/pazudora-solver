@@ -10,7 +10,8 @@ class Solver(object):
     def __init__(self):
         pass
 
-    def run(self, rows, columns, depth, weights):
+    @staticmethod
+    def run(rows, columns, depth, weights):
         b = Board.create_randomized_board(rows, columns)
 
         m = Board.create_empty_board(rows, columns)
@@ -41,15 +42,15 @@ class Solver(object):
 
 
 if __name__ == "__main__":
-    Solver().run(5,
-                 6,
-                 50,
-                 {Fire.symbol: 2.0,
-                  Wood.symbol: 2.0,
-                  Water.symbol: 2.0,
-                  Dark.symbol: 2.0,
-                  Light.symbol: 2.0,
-                  Heart.symbol: 1.0,
-                  Poison.symbol: 0.5,
-                  Jammer.symbol: 0.5,
-                  Unknown.symbol: 0.0})
+    Solver.run(5,
+               6,
+               50,
+               {Fire.symbol: 2.0,
+                Wood.symbol: 2.0,
+                Water.symbol: 2.0,
+                Dark.symbol: 2.0,
+                Light.symbol: 2.0,
+                Heart.symbol: 1.0,
+                Poison.symbol: 0.5,
+                Jammer.symbol: 0.5,
+                Unknown.symbol: 0.0})
