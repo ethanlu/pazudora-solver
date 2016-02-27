@@ -1,4 +1,4 @@
-from pazudora_solver.piece import Piece, Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
+from pazudorasolver.piece import Piece, Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
 
 import pytest
 

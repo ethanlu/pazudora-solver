@@ -1,5 +1,5 @@
-from pazudora_solver.piece import Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
-from pazudora_solver.board import Board
+from pazudorasolver.piece import Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
+from pazudorasolver.board import Board
 
 import pytest
 

@@ -21,7 +21,7 @@ class PyTestCommand(TestCommand):
         sys.exit(errno)
 
 setup(
-    name="pazudora_solver",
+    name="pazudorasolver",
     version="0.1.0",
     author="Ethan Fang Lu",
     author_email="fang.lu@gmail.com",
@@ -36,7 +36,7 @@ setup(
         'Programming Language :: Python :: 2.7',
         'Topic :: Games/Entertainment :: Puzzle Games'
     ],
-    packages=find_packages("pazudora_solver.*"),
+    packages=find_packages("pazudorasolver.*"),
     dependency_links=[],
     install_requires=[
         "pytest==2.8.7",

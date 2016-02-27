@@ -1,7 +1,7 @@
-from pazudora_solver.board import Board
-from pazudora_solver.heuristics.greedy_dfs import GreedyDfs
-from pazudora_solver.heuristics.pruned_bfs import PrunedBfs
-from pazudora_solver.piece import Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
+from pazudorasolver.board import Board
+from pazudorasolver.heuristics.greedy_dfs import GreedyDfs
+from pazudorasolver.heuristics.pruned_bfs import PrunedBfs
+from pazudorasolver.piece import Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
 
 import time
 

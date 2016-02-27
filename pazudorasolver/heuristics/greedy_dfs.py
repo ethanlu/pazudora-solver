@@ -1,5 +1,5 @@
-from pazudora_solver.heuristics.heuristic import Heuristic
-from pazudora_solver.board import Board
+from pazudorasolver.heuristics.heuristic import Heuristic
+from pazudorasolver.board import Board
 
 
 class GreedyDfs(Heuristic):
