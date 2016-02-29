@@ -22,13 +22,13 @@ class PyTestCommand(TestCommand):
 
 setup(
     name="pazudorasolver",
-    version="0.1.2",
+    version="0.1.3",
     author="Ethan Fang Lu",
     author_email="fang.lu@gmail.com",
     description="Puzzles and Dragons board solver",
     keywords="pad",
     url="https://github.com/ethanlu/pazudora-solver",
-    download_url="https://github.com/ethanlu/pazudora-solver/releases/tag/0.1.2",
+    download_url="https://github.com/ethanlu/pazudora-solver/releases/tag/0.1.3",
     license="MIT",
     classifiers=[
         'Development Status :: 4 - Beta',
