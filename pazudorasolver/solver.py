@@ -12,12 +12,15 @@ class Solver(object):
 
     @staticmethod
     def run(rows, columns, depth, weights):
+        def update_board_with_matches(board, matches):
+            for piece, clusters in matches:
+                for r, c in clusters:
+                    board.update(r, c, type(piece))
+
         b = Board.create_randomized_board(rows, columns)
 
         m = Board.create_empty_board(rows, columns)
-        for cluster in b.get_matches():
-            for r, c in cluster[1]:
-                m.update(r, c, type(cluster[0]))
+        update_board_with_matches(m, b.get_matches())
 
         s = GreedyDfs(weights) if False else PrunedBfs(weights)
         s.diagonals = True
@@ -35,9 +38,8 @@ class Solver(object):
         print moves[2]
 
         m = Board.create_empty_board(rows, columns)
-        for cluster in moves[2].get_matches():
-            for r, c in cluster[1]:
-                m.update(r, c, type(cluster[0]))
+        update_board_with_matches(m, moves[2].get_matches())
+
         print m
 
 

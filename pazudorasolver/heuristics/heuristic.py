@@ -31,10 +31,10 @@ class Heuristic(object):
         fragment_score = 0.0
         if row is not None and column is not None:
             # fragment score is the number of clusters around the target cell that is more than length 3 (potential chain)
-            fragment_score += len(board.get_cluster(row - 1, column)[1]) // 3
-            fragment_score += len(board.get_cluster(row + 1, column)[1]) // 3
-            fragment_score += len(board.get_cluster(row, column - 1)[1]) // 3
-            fragment_score += len(board.get_cluster(row, column + 1)[1]) // 3
+            fragment_score += len(board.get_cluster(row - 1, column)[1]) // 3 \
+                              + len(board.get_cluster(row + 1, column)[1]) // 3 \
+                              + len(board.get_cluster(row, column - 1)[1]) // 3 \
+                              + len(board.get_cluster(row, column + 1)[1]) // 3
 
         return (chain_multiplier * match_score + fragment_score)
 
@@ -56,7 +56,7 @@ class Heuristic(object):
         return [
             (delta_r, delta_c)
             for delta_r, delta_c in directions
-            if 0 <= row + delta_r <= board.rows - 1 and 0 <= column + delta_c <= board.columns - 1 and (delta_r * -1, delta_c * -1) != previous_move
+            if 0 <= row + delta_r < board.rows and 0 <= column + delta_c < board.columns and (-delta_r, -delta_c) != previous_move
         ]
 
     @abstractmethod

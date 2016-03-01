@@ -2,22 +2,6 @@ from abc import ABCMeta, abstractproperty
 from termcolor import colored
 
 
-class PieceFactory(object):
-    @staticmethod
-    def read_symbol(symbol):
-        map = dict((cls.symbol, cls) for cls in Piece.__subclasses__())
-        if symbol.strip().upper() not in map:
-            raise Exception('Unrecognized symbol : {symbol}'.format(symbol=symbol))
-        return map[symbol.strip().upper()]
-
-    @staticmethod
-    def read_element(element):
-        map = dict((cls.__name__.upper(), cls) for cls in Piece.__subclasses__())
-        if element.strip().upper() not in map:
-            raise Exception('Unrecognized element : {element}'.format(element=element))
-        return map[element.strip().upper()]
-
-
 class Piece(object):
     __metaclass__ = ABCMeta
 
@@ -97,3 +81,22 @@ class Unknown(Piece):
     symbol = '?'
     color = 'grey'
     matchable = False
+
+
+class PieceFactory(object):
+    symbols_map = dict((cls.symbol, cls) for cls in Piece.__subclasses__())
+    elements_map = dict((cls.__name__.upper(), cls) for cls in Piece.__subclasses__())
+
+    @staticmethod
+    def read_symbol(symbol):
+        try:
+            return PieceFactory.symbols_map[symbol.strip().upper()]
+        except:
+            raise Exception('Unrecognized symbol : {symbol}'.format(symbol=symbol))
+
+    @staticmethod
+    def read_element(element):
+        try:
+            return PieceFactory.elements_map[element.strip().upper()]
+        except:
+            raise Exception('Unrecognized element : {element}'.format(element=element))
