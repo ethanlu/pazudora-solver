@@ -45,7 +45,6 @@ setup(
         "termcolor==1.1"
     ],
     tests_require=[
-        "flake8",
         "pytest"
     ],
     cmdclass={
