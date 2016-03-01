@@ -2,7 +2,7 @@
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/pazudorasolver.svg)](https://pypi.python.org/pypi/pazudorasolver/)
 [![Build Status](https://travis-ci.org/ethanlu/pazudora-solver.svg?branch=master)](https://travis-ci.org/ethanlu/pazudora-solver)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/78cdfdafa28f4475a3dea086c3dd006d)](https://www.codacy.com/app/ethanoks/pazudora-solver)
-[![Code Climate](https://codeclimate.com/github/ethanlu/pazudora-solver/badges/gpa.svg)](https://codeclimate.com/github/ethanlu/pazudora-solver)
+[![Coverage Status](https://coveralls.io/repos/github/ethanlu/pazudora-solver/badge.svg?branch=master)](https://coveralls.io/github/ethanlu/pazudora-solver?branch=master)
 
 Pazudora Solver
 =====
@@ -45,7 +45,7 @@ print solution
 ```
 
 ### TODO
-- Improve fragment score calculation
 - Improve cycle detection when finding solutions
+- Improve fragment score calculation
 - Add benchmark app to compare various heuristics
 - Add more heuristics for solving board
