@@ -11,7 +11,7 @@ class GreedyDfs(Heuristic):
             return (score, moves, board)
         else:
             # get possible swaps from current row, column position
-            swaps = self._swaps(board, row, column, moves[-1] if len(moves) > 1 else None)
+            swaps = self._swaps(board, row, column, moves[-1])
 
             solutions = []
             for delta_r, delta_c in swaps:

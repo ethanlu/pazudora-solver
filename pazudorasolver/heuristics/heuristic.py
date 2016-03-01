@@ -49,28 +49,15 @@ class Heuristic(object):
         """
         # consider previous move's direction so that we don't end up going back
         # get swaps in all directions (up, down, left, right)
-        swaps = []
-        if row > 0 and (previous_move is None or previous_move != (1, 0)):
-            swaps.append((-1, 0))
-        if row < board.rows - 1 and (previous_move is None or previous_move != (-1, 0)):
-            swaps.append((1, 0))
-        if column > 0 and (previous_move is None or previous_move != (0, 1)):
-            swaps.append((0, -1))
-        if column < board.columns - 1 and (previous_move is None or previous_move != (0, -1)):
-            swaps.append((0, 1))
-
-        # get swaps for diagonals if they are enabled
+        directions = [(-1, 0), (0, 1), (1, 0), (0, -1)]
         if self._diagonals:
-            if row > 0 and column > 0 and (previous_move is None or previous_move != (1, 1)):
-                swaps.append((-1, -1))
-            if row > 0 and column < board.columns - 1 and (previous_move is None or previous_move != (1, -1)):
-                swaps.append((-1, 1))
-            if row < board.rows - 1 and column > 0 and (previous_move is None or previous_move != (-1, 1)):
-                swaps.append((1, -1))
-            if row < board.rows - 1 and column < board.columns - 1 and (previous_move is None or previous_move != (-1, -1)):
-                swaps.append((1, 1))
+            directions += [(-1, -1), (-1, 1), (1, 1), (1, -1)]
 
-        return swaps
+        return [
+            (delta_r, delta_c)
+            for delta_r, delta_c in directions
+            if 0 <= row + delta_r <= board.rows - 1 and 0 <= column + delta_c <= board.columns - 1 and (delta_r * -1, delta_c * -1) != previous_move
+        ]
 
     @abstractmethod
     def solve(self, board, depth):
