@@ -2,6 +2,7 @@
 .cache/
 .eggs/
 .tox/
+.coverage
 dist/
 build/
 *__pycache__

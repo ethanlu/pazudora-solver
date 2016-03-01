@@ -1,6 +1,6 @@
 from pazudorasolver.piece import Fire, Wood, Water, Dark, Light, Heart, Poison, Jammer, Unknown
 from pazudorasolver.board import Board
-from pazudorasolver.heuristics.greedy_dfs import GreedyDfs
+from pazudorasolver.heuristics.pruned_bfs import PrunedBfs
 
 import pytest
 
@@ -31,12 +31,12 @@ def test_pruned_bfs(weights):
 
     # solution should contain move list that gets you to the final board state starting from original board state
     original = Board.create_randomized_board(5, 6)
-    _, moves, final_board = GreedyDfs(weights).solve(original, 20)
+    _, moves, final_board = PrunedBfs(weights).solve(original, 20)
     compare(original, final_board, moves[1:], moves[0][0], moves[0][1], "Pruned BFS yielded an incorrect 4-way move list!")
 
     # same with diagonals enabled
     original = Board.create_randomized_board(5, 6)
-    h = GreedyDfs(weights)
+    h = PrunedBfs(weights)
     h.diagonals = True
     _, moves, final_board = h.solve(original, 20)
     compare(original, final_board, moves[1:], moves[0][0], moves[0][1], "Pruned BFS yielded an incorrect 8-way move list!")
