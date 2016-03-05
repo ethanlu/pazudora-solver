@@ -5,6 +5,7 @@
 .coverage
 dist/
 build/
+coverage.xml
 *__pycache__
 *.egg-info/
 *.pyc
