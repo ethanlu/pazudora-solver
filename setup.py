@@ -22,7 +22,7 @@ class PyTestCommand(TestCommand):
 
 setup(
     name="pazudorasolver",
-    version="0.1.3",
+    version="0.1.4",
     author="Ethan Fang Lu",
     author_email="fang.lu@gmail.com",
     description="Puzzles and Dragons board solver",

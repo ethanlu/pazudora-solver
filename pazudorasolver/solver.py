@@ -17,15 +17,19 @@ class Solver(object):
                 for r, c in clusters:
                     board.update(r, c, type(piece))
 
-        b = Board.create_randomized_board(rows, columns)
+        b = Board([Fire,  Wood,  Water, Dark,  Light, Light,
+                  Water, Fire, Water, Light, Heart, Light,
+                  Fire,  Water, Dark,  Heart, Heart, Wood,
+                  Light, Water, Light, Fire,  Wood,  Wood,
+                  Dark,  Heart, Dark,  Light, Heart, Light], 5, 6)
 
         m = Board.create_empty_board(rows, columns)
         update_board_with_matches(m, b.get_matches())
 
-        s = GreedyDfs(weights) if False else PrunedBfs(weights)
-        s.diagonals = True
+        h = GreedyDfs(weights) if False else PrunedBfs(weights)
+        h.diagonals = True
         start = time.time()
-        moves = s.solve(b, depth)
+        moves = h.solve(b, depth)
         performance = time.time() - start
 
         print '---------------------------------------------'

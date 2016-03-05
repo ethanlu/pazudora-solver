@@ -1,5 +1,7 @@
 from abc import ABCMeta, abstractmethod
 
+import random
+
 
 class Heuristic(object):
     __metaclass__ = ABCMeta
@@ -16,7 +18,7 @@ class Heuristic(object):
     def diagonals(self, diagonals):
         self._diagonals = diagonals
 
-    def _score(self, board, row=None, column=None):
+    def _score(self, board):
         """
         calculates a score for the current state of the board with given weights. optional row, column will calculate additional score based on localality
         :param board: current board
@@ -27,18 +29,12 @@ class Heuristic(object):
         """
         matches = board.get_matches()
         chain_multiplier = len(matches)
-        match_score = sum([self._weights[piece.symbol] for piece, clusters in matches])
-        fragment_score = 0.0
-        if row is not None and column is not None:
-            # fragment score is the number of clusters around the target cell that is more than length 3 (potential chain)
-            fragment_score += len(board.get_cluster(row - 1, column)[1]) // 3 \
-                              + len(board.get_cluster(row + 1, column)[1]) // 3 \
-                              + len(board.get_cluster(row, column - 1)[1]) // 3 \
-                              + len(board.get_cluster(row, column + 1)[1]) // 3
+        match_score = sum([self._weights[piece.symbol] * len(clusters) for piece, clusters in matches])
+        chaos_score = random.random()
 
-        return (chain_multiplier * match_score + fragment_score)
+        return (chain_multiplier * match_score + chaos_score)
 
-    def _swaps(self, board, row, column, previous_move):
+    def _swaps(self, board, row, column):
         """
         list of possible swaps
         :param board: current board
@@ -56,7 +52,7 @@ class Heuristic(object):
         return [
             (delta_r, delta_c)
             for delta_r, delta_c in directions
-            if 0 <= row + delta_r < board.rows and 0 <= column + delta_c < board.columns and (-delta_r, -delta_c) != previous_move
+            if 0 <= row + delta_r < board.rows and 0 <= column + delta_c < board.columns
         ]
 
     @abstractmethod

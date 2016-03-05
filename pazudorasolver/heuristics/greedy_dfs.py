@@ -11,12 +11,12 @@ class GreedyDfs(Heuristic):
             return (score, moves, board)
         else:
             # get possible swaps from current row, column position
-            swaps = self._swaps(board, row, column, moves[-1])
+            swaps = self._swaps(board, row, column)
 
             solutions = []
             for delta_r, delta_c in swaps:
                 swapped_board = Board.copy_board(board).swap(row, column, row + delta_r, column + delta_c)
-                solutions.append((self._score(swapped_board, *(delta_r, delta_c)), swapped_board, (delta_r, delta_c)))
+                solutions.append((self._score(swapped_board), swapped_board, (delta_r, delta_c)))
 
             # calculate score on all possible swaps and order them from highest to lowest. recurse into the highest one
             best = max(solutions, key=lambda x: x[0])
