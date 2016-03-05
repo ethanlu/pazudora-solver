@@ -3,7 +3,11 @@ python: 2.7
 install:
   - pip install tox
   - pip install coveralls
+  - pip install codacy-coverage
 script:
-  tox
-after_success: coveralls
+  - tox
+after_success:
+  - coveralls
+  - coverage xml
+  - python-codacy-coverage -r coverage.xml
 sudo: false

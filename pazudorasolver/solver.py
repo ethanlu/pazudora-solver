@@ -17,11 +17,12 @@ class Solver(object):
                 for r, c in clusters:
                     board.update(r, c, type(piece))
 
-        b = Board([Fire,  Wood,  Water, Dark,  Light, Light,
-                  Water, Fire, Water, Light, Heart, Light,
-                  Fire,  Water, Dark,  Heart, Heart, Wood,
-                  Light, Water, Light, Fire,  Wood,  Wood,
-                  Dark,  Heart, Dark,  Light, Heart, Light], 5, 6)
+        b = Board.create_randomized_board(5, 6)
+        # b = Board([Fire,  Wood,  Water, Dark,  Light, Light,
+        #           Water, Fire, Water, Light, Heart, Light,
+        #           Fire,  Water, Dark,  Heart, Heart, Wood,
+        #           Light, Water, Light, Fire,  Wood,  Wood,
+        #           Dark,  Heart, Dark,  Light, Heart, Light], 5, 6)
 
         m = Board.create_empty_board(rows, columns)
         update_board_with_matches(m, b.get_matches())
