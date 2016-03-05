@@ -7,6 +7,6 @@ install:
 script:
   - tox
 after_success:
-  - coveralls
   - python-codacy-coverage -r coverage.xml
+  - coveralls
 sudo: false
