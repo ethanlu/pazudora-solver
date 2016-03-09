@@ -1,6 +1,7 @@
 [![PyPI version](https://badge.fury.io/py/pazudorasolver.svg)](https://badge.fury.io/py/pazudorasolver)
 [![Supported Python Versions](https://img.shields.io/pypi/pyversions/pazudorasolver.svg)](https://pypi.python.org/pypi/pazudorasolver/)
 [![Build Status](https://travis-ci.org/ethanlu/pazudora-solver.svg?branch=master)](https://travis-ci.org/ethanlu/pazudora-solver)
+[![Requirements Status](https://requires.io/github/ethanlu/pazudora-solver/requirements.svg?branch=master)](https://requires.io/github/ethanlu/pazudora-solver/requirements/?branch=master)
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/78cdfdafa28f4475a3dea086c3dd006d)](https://www.codacy.com/app/ethanoks/pazudora-solver)
 [![Coverage Status](https://coveralls.io/repos/github/ethanlu/pazudora-solver/badge.svg?branch=master)](https://coveralls.io/github/ethanlu/pazudora-solver?branch=master)
 
