@@ -3,9 +3,7 @@ from abc import ABCMeta, abstractmethod
 import random
 
 
-class Heuristic(object):
-    __metaclass__ = ABCMeta
-
+class Heuristic(metaclass=ABCMeta):
     def __init__(self, weights):
         self._weights = weights
         self._diagonals = False

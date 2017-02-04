@@ -115,7 +115,7 @@ class Board(object):
 
         # get horizontal and vertical chains
         horizontal_chains = find_chains(self._rows, self._columns, self._board)
-        vertical_chains = find_chains(self._columns, self._rows, zip(*self._board))  # swap row with column and transpose board to get verticals
+        vertical_chains = find_chains(self._columns, self._rows, list(zip(*self._board)))  # swap row with column and transpose board to get verticals
 
         clusters = []
         if horizontal_chains or vertical_chains:

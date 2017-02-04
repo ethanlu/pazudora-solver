@@ -8,7 +8,7 @@ class PrunedBfs(Heuristic):
         self._prune_limit = 50
 
     def _prune(self, solutions):
-        return sorted(solutions, cmp=lambda x, y: cmp(x[0], y[0]), reverse=True)[0:self._prune_limit]
+        return sorted(solutions, key=lambda x: x[0], reverse=True)[0:self._prune_limit]
 
     def _step(self, solutions, depth):
         if depth == 0:

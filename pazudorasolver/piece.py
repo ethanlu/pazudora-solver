@@ -2,9 +2,7 @@ from abc import ABCMeta, abstractproperty
 from termcolor import colored
 
 
-class Piece(object):
-    __metaclass__ = ABCMeta
-
+class Piece(metaclass=ABCMeta):
     def __init__(self, r, c):
         self._row = r
         self._column = c

@@ -33,19 +33,19 @@ class Solver(object):
         moves = h.solve(b, depth)
         performance = time.time() - start
 
-        print '---------------------------------------------'
-        print b
-        print m
-        print 'run time : ' + str(performance)
-        print 'best move score : ' + str(moves[0])
-        print 'start : ' + str(moves[1][0])
-        print 'moves : ' + str(moves[1][1:])
-        print moves[2]
+        print('---------------------------------------------')
+        print(b)
+        print(m)
+        print('run time : ' + str(performance))
+        print('best move score : ' + str(moves[0]))
+        print('start : ' + str(moves[1][0]))
+        print('moves : ' + str(moves[1][1:]))
+        print(moves[2])
 
         m = Board.create_empty_board(rows, columns)
         update_board_with_matches(m, moves[2].get_matches())
 
-        print m
+        print(m)
 
 
 if __name__ == "__main__":

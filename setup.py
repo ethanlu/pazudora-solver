@@ -22,7 +22,7 @@ class PyTestCommand(TestCommand):
 
 setup(
     name="pazudorasolver",
-    version="0.1.4",
+    version="0.2.0",
     author="Ethan Fang Lu",
     author_email="fang.lu@gmail.com",
     description="Puzzles and Dragons board solver",
@@ -34,9 +34,8 @@ setup(
         'Development Status :: 4 - Beta',
         'License :: OSI Approved :: MIT License',
         'Programming Language :: Python',
-        'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3.4',
         'Topic :: Games/Entertainment :: Puzzle Games'
     ],
     packages=find_packages(),
