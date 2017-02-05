@@ -118,6 +118,5 @@ print(solution)
 ```
 
 ## TODO
-- Add memoization techniques to PrunedBFS heuristic to yield faster and better results
 - Improve score calculation (TPA, Row-clear, N-match, etc.)
 - Additional heuristics for solving board

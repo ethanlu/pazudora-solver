@@ -31,6 +31,9 @@ class Board(object):
 
         return output
 
+    def hash(self):
+        return "".join([self._board[r][c].symbol for r in range(self._rows) for c in range(self._columns)])
+
     @classmethod
     def create_randomized_board(cls, rows, columns):
         pieces = [Fire, Wood, Water, Dark, Light, Heart]

@@ -51,7 +51,7 @@ class Solver(object):
 if __name__ == "__main__":
     Solver.run(5,
                6,
-               50,
+               100,
                {Fire.symbol: 2.0,
                 Wood.symbol: 2.0,
                 Water.symbol: 2.0,
