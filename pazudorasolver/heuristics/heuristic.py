@@ -9,6 +9,7 @@ class Heuristic(object):
     def __init__(self, weights):
         self._weights = weights
         self._diagonals = False
+        self._history = {}
 
     @property
     def diagonals(self):
@@ -17,6 +18,17 @@ class Heuristic(object):
     @diagonals.setter
     def diagonals(self, diagonals):
         self._diagonals = diagonals
+
+    def _reset(self):
+        self._history = {}
+
+    def _remember(self, board):
+        s = board.hash()
+        if s not in self._history:
+            self._history[s] = True
+            return self._history[s]
+        else:
+            return False
 
     def _score(self, board):
         """

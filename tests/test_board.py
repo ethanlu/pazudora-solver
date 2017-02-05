@@ -193,3 +193,9 @@ def test_cell_swap(board_with_1_chain):
     assert isinstance(swapped_board.cell(2, 2), type(original.cell(3, 3))), "Swapped piece @ 2,2 does not match original @ 3,3"
     assert isinstance(swapped_board.cell(3, 3), type(original.cell(4, 4))), "Swapped piece @ 3,3 does not match original @ 4,4"
     assert isinstance(swapped_board.cell(4, 4), type(original.cell(0, 0))), "Swapped piece @ 4,4 does not match original @ 0,0"
+
+def test_board_hash(board_with_0_chain, board_with_1_chain, board_with_3_chain):
+    # make sure hash method returns string sequence of board going from top-left to down to bottom right (rows and then columns)
+    assert board_with_0_chain.hash() == '????????R????R?????RR?????????', "Board hash yielded unexpected sequence for first test!"
+    assert board_with_1_chain.hash() == 'RGBPY@BBBYH#RBPHHGYBYRGGPHPYHY', "Board hash yielded unexpected sequence for second test!"
+    assert board_with_3_chain.hash() == 'RGBPYHRBPYHRRBPHHGYBYRGGPBPYYY', "Board hash yielded unexpected sequence for third test!"

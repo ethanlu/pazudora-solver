@@ -45,8 +45,6 @@ solution = solver2.solve(board, 50)
 print solution
 ```
 
-### TODO
-- Improve cycle detection when finding solutions
-- Improve fragment score calculation
-- Add benchmark app to compare various heuristics
-- Add more heuristics for solving board
+## TODO
+- Improve score calculation (TPA, Row-clear, N-match, etc.)
+- Additional heuristics for solving board
