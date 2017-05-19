@@ -1,11 +1,15 @@
 language: python
 python: 2.7
+env:
+  - TOX_ENV=py34
+  - TOX_ENV=py35
+  - TOX_ENV=py36
 install:
   - pip install tox
   - pip install coveralls
   - pip install codacy-coverage
 script:
-  - tox
+  - tox -e ${TOX_ENV}
 after_success:
   - python-codacy-coverage -r coverage.xml
   - coveralls
